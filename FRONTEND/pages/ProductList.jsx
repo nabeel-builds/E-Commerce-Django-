@@ -32,7 +32,7 @@ function ProductList(){
     }
 
     if (error) {
-        return <div>Error:</div>
+        return <div>Error: {error}</div>
     }
 
     return(
