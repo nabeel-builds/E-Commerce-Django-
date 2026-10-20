@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { useCart } from "../context/CartContext"
 
 function ProductDetails() {
 
@@ -8,6 +9,7 @@ function ProductDetails() {
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const {addToCart} = useCart()
 
     useEffect(() => {
         async function productDetails(){
@@ -52,7 +54,7 @@ function ProductDetails() {
                         </h1>
                         <p className="text-gray-600 mb-4">{product.description}</p>
                         <p className="text-2xl font-semibold text-green-600 mb-6">${product.price}</p>
-                        <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all cursor-pointer">Add to Cart</button>
+                        <button onClick={()=> addToCart(product)} className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all cursor-pointer">Add to Cart</button>
                         {/* Home Page Navigate */}
                         <div className="mt-4">
                             <a href="/" className="text-blue-600 hover:underline">
