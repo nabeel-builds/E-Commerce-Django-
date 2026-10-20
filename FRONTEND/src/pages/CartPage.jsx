@@ -1,13 +1,10 @@
 import { useCart } from "../context/CartContext";
 
 function CartPage() {
-    const { cartItems, removeFromCart, updateQuantity } = useCart();
+    const { cartItems, total, removeFromCart, updateQuantity } = useCart();
     const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL
 
-    const total = cartItems.reduce(
-        (acc, item) => acc + Number(item.price) * item.quantity,
-        0
-    );
+  
 
     const formatPrice = (price) =>
         `$${Number(price).toFixed(2)}`;
