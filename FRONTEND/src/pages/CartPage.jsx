@@ -294,16 +294,13 @@ function CartPage() {
                                 </div>
                             </div>
 
-                            <button
+                            <Link to='/checkout'
                                 type="button"
-                                onClick={() =>
-                                    alert("Checkout will be available soon!")
-                                }
                                 className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3.5 font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-blue-100"
                             >
                                 Proceed to Checkout
                                 <span>→</span>
-                            </button>
+                            </Link>
 
                             <Link
                                 to="/"

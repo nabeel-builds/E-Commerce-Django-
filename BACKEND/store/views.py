@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .models import Product, Category, Cart, CartItem
+from .models import Product, Category, Cart, CartItem, Order, OrderItem
 from .serializers import CategorySerializer, ProductSerializer, CartSerializer, CartItemSerializer
 
 @api_view(['GET'])
@@ -78,3 +78,47 @@ def update_cart_quantity(request):
         return Response(serializer.data)
     except CartItem.DoesNotExist:
         return Response({'error': 'Cart item not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+def create_order(request):
+    try:
+        data = request.data
+
+        name = data.get('name')
+        address = data.get('address')
+        phone = data.get('phone')
+        payment_method = data.get('payment_method', 'COD')
+
+        cart = Cart.objects.first()
+
+        if not cart or not cart.items.exists():
+            return Response({'error': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
+
+        total = sum(float(item.product.price) * item.quantity for item in cart.items.all())
+
+        #Create Order
+        order = Order.objects.create(
+            user = None,
+            total_amount = total
+        )
+
+        #Create order Items
+        for item in cart.items.all():
+            OrderItem.objects.create(
+                order = order,
+                product = item.product,
+                quantity = item.quantity,
+                price = item.product.price
+            )
+
+        #Clear the cart
+        cart.items.all().delete()
+
+        return Response({
+            'message': 'Order placed successfully',
+            'order_id': order.id,
+        })
+
+    except Exception as err:
+        return Response({'error': str(err)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
