@@ -1,9 +1,34 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
+
+    const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL
+
     const [cartItems, setCartItems] = useState([])
+
+    const [total, setTotal] = useState(0)
+
+    // Fetch Cart from Backend
+    const fetchCart = async () => {
+        try{
+            const response = await fetch(`${BASEURL}/api/cart`)
+            if (!response.ok){
+                throw new Error("Failed to fetch")
+            }
+            const data = await response.json()
+            setCartItems(data.item || [])
+            setTotal(data.total || 0)
+        }catch(error){
+            console.error("Error fetching cart:", error)
+        }
+    }
+
+    useEffect(() => {
+      fetchCart()
+    }, [])
+    
 
     // Add Product to Cart
 

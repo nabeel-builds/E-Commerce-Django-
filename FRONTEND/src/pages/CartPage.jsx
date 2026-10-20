@@ -1,8 +1,8 @@
-
 import { useCart } from "../context/CartContext";
 
 function CartPage() {
     const { cartItems, removeFromCart, updateQuantity } = useCart();
+    const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL
 
     const total = cartItems.reduce(
         (acc, item) => acc + Number(item.price) * item.quantity,
@@ -115,7 +115,11 @@ function CartPage() {
                                                 <h3 className="font-semibold text-gray-900 text-lg">
                                                     {item.name}
                                                 </h3>
-
+                                                <div className="flex items-center gap-4">
+                                                    {item.product_image && (
+                                                        <img src={`${BASEURL}${item.product_image}`} alt={item.name} className="w-20 h-20 object-cover rounded" />
+                                                    )}
+                                                </div>
                                                 <p className="text-sm text-gray-500 mt-1">
                                                     Unit price: {formatPrice(item.price)}
                                                 </p>
