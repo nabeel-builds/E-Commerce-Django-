@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { authFetch, getAccessToken } from "../utils/auth";
+import { authFetch } from "../utils/auth";
 
 const CartContext = createContext()
 
@@ -118,7 +118,7 @@ const fetchCart = async () => {
     }
 
     return (
-        <CartContext.Provider value={{ cartItems, total, addToCart, removeFromCart, updateQuantity, clearCart }}>
+        <CartContext.Provider value={{ cartItems, total, addToCart, removeFromCart, updateQuantity, clearCart, fetchCart }}>
             {children}
         </CartContext.Provider>
     )

@@ -6,7 +6,7 @@ import { authFetch } from "../utils/auth.js";
 function CheckoutPage() {
     const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
     const navigate = useNavigate();
-    const { cartItems, total } = useCart();
+    const { cartItems, total, fetchCart } = useCart();
 
     const [form, setForm] = useState({
         name: "",
@@ -83,6 +83,8 @@ function CheckoutPage() {
                     data.error || "Failed to place your order. Please try again."
                 );
             }
+
+            await fetchCart()
 
             setMessage(
                 `Order placed successfully! Order ID: ${data.order_id}`

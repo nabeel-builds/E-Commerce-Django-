@@ -158,7 +158,7 @@ function CartPage() {
                                                     NexaMart Product
                                                 </p>
 
-                                                <h3 className="break-words text-lg font-bold text-gray-900">
+                                                <h3 className="wrap-break-word text-lg font-bold text-gray-900">
                                                     {item.product_name}
                                                 </h3>
 
