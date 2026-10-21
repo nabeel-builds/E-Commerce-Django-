@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { authFetch, getAccessToken } from "../utils/auth";
 
 const CartContext = createContext()
 
@@ -14,7 +15,7 @@ export const CartProvider = ({ children }) => {
 
 const fetchCart = async () => {
     try {
-        const response = await fetch(`${BASEURL}/api/cart/`);
+        const response = await authFetch(`${BASEURL}/api/cart/`);
 
         if (!response.ok) {
             throw new Error("Failed to fetch cart");
@@ -40,7 +41,7 @@ const fetchCart = async () => {
 
     const addToCart = async (productId) => {
         try {
-            const response = await fetch(`${BASEURL}/api/cart/add/`, {
+            const response = await authFetch(`${BASEURL}/api/cart/add/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -76,7 +77,7 @@ const fetchCart = async () => {
     // Remove product from cart
     const removeFromCart = async (itemId) => {
         try {
-            await fetch(`${BASEURL}/api/cart/remove/`, {
+            await authFetch(`${BASEURL}/api/cart/remove/`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -97,7 +98,7 @@ const fetchCart = async () => {
             return
         }
         try {
-            await fetch(`${BASEURL}/api/cart/update/`, {
+            await authFetch(`${BASEURL}/api/cart/update/`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
