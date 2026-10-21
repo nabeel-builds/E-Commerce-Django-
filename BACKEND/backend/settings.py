@@ -92,11 +92,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=(
-            f"postgres://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
-            f"@{os.getenv('DB_HOST', 'localhost')}:{os.getenv('DB_PORT', '5432')}"
-            f"/{os.getenv('DB_NAME')}"
-        ),
+        default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
         conn_health_checks=True,
     )
