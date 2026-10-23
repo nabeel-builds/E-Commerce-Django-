@@ -148,9 +148,9 @@ MAILERS = {
 
 CORS_ALLOWED_ORIGINS = [
     "e-commerce-django-f0ml.onrender.com",
- 'http://localhost:5173',
- "127.0.0.1",
- "localhost",
+    'http://localhost:5173',
+    "127.0.0.1",
+    "localhost",
 ]
 
 MEDIA_URL = '/media/'
