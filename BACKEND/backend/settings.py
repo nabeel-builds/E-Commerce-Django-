@@ -31,10 +31,10 @@ SECRET_KEY = 'django-insecure-r6p6#qlf(jt6qyu!h@7wj9+%#=qkjy^gv90#hopii_wul@uotn
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "https://e-commerce-django-f0ml.onrender.com",
-    'localhost',
-    '127.0.0.1',
-    'testserver',
+    "e-commerce-django-f0ml.onrender.com",
+    "localhost",
+    "127.0.0.1",
+    "testserver",
 ]
 
 
