@@ -13,15 +13,23 @@ export const CartProvider = ({ children }) => {
 
     // Fetch Cart from Backend
 
+
 const fetchCart = async () => {
     try {
         const response = await authFetch(`${BASEURL}/api/cart/`);
 
-        if (!response.ok) {
-            throw new Error("Failed to fetch cart");
-        }
+        const data = await response.json().catch(() => ({}));
 
-        const data = await response.json();
+        if (!response.ok) {
+            console.error("Cart API status:", response.status);
+            console.error("Cart API response:", data);
+
+            throw new Error(
+                data.detail ||
+                data.error ||
+                `Failed to fetch cart: ${response.status}`
+            );
+        }
 
         setCartItems(data.items || []);
         setTotal(Number(data.total) || 0);
@@ -29,6 +37,7 @@ const fetchCart = async () => {
         console.error("Error fetching cart:", error);
     }
 };
+
 
 
     useEffect(() => {
