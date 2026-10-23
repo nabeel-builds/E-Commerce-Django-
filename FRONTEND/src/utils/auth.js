@@ -14,9 +14,10 @@ export const getAccessToken = () => {
 };
 
 export const authFetch = (url, options = {}) => {
-    const token = getAccessToken();
-
     const headers = new Headers(options.headers || {});
+
+
+    const token = getAccessToken();
 
     if (token) {
         headers.set("Authorization", `Bearer ${token}`);
