@@ -14,4 +14,8 @@ urlpatterns = [
     path('cart/remove/', views.remove_to_cart, name='remove_cart'),
     path('cart/update/', views.update_cart_quantity, name='remove_cart'),
     path('orders/create/', views.create_order, name='create_order'),
+
+
+    #tempory
+    path("admin-diagnostic/", views.admin_diagnostic),
 ]

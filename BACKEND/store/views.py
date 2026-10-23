@@ -6,6 +6,19 @@ from rest_framework import status
 from .models import Product, Category, Cart, CartItem, Order, OrderItem
 from .serializers import CategorySerializer, ProductSerializer, CartSerializer, CartItemSerializer, RegisterSerializer, UserSerializer
 
+
+
+#tempory
+from django.contrib.auth import get_user_model
+from django.db import connection
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+import os
+
+
+
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_products(request):
@@ -146,3 +159,38 @@ def register(request):
 
 
 
+
+
+
+
+
+
+#tempory
+
+@require_GET
+def admin_diagnostic(request):
+    expected_token = os.getenv("ADMIN_DIAG_TOKEN")
+
+    if not expected_token or request.headers.get("X-Diagnostic-Token") != expected_token:
+        return JsonResponse({"error": "Forbidden"}, status=403)
+
+    User = get_user_model()
+
+    try:
+        user = User.objects.get(username="nabeel")
+
+        return JsonResponse({
+            "database_name": connection.settings_dict.get("NAME"),
+            "database_host": connection.settings_dict.get("HOST"),
+            "user_exists": True,
+            "is_active": user.is_active,
+            "is_staff": user.is_staff,
+            "is_superuser": user.is_superuser,
+            "has_usable_password": user.has_usable_password(),
+        })
+    except User.DoesNotExist:
+        return JsonResponse({
+            "database_name": connection.settings_dict.get("NAME"),
+            "database_host": connection.settings_dict.get("HOST"),
+            "user_exists": False,
+        })
